@@ -1,4 +1,4 @@
-#include "meter.h"
+#include "Meter.h"
 
 Meter::Meter(double value) : value(value)
 {

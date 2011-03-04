@@ -15,4 +15,4 @@ add_subdirectory(units)
 # add the executable
 add_executable(convert-length convert-length.cpp)
 
-target_link_libraries(convert-length ${Boost_LIBRARIES} Meter)
+target_link_libraries(convert-length ${Boost_LIBRARIES} Meter Inch)
