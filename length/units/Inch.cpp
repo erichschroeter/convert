@@ -1,5 +1,8 @@
 #include "Inch.h"
 
+namespace Length
+{
+
 Inch::Inch(double value) : value(value)
 {
 
@@ -21,3 +24,4 @@ double Inch::convertTo(UnitType unit)
     return retValue;
 }
 
+}

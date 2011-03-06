@@ -2,8 +2,12 @@
 #define METER_H
 
 #include "Units.h"
+#include "ILengthConvertable.h"
 
-class Meter
+namespace Length
+{
+
+class Meter : public ILengthConvertable
 {
     // The value of this Meter object
     double value;
@@ -11,7 +15,10 @@ class Meter
 public:
     Meter(double value);
 
-    double convertTo(UnitType unit);
+    // ILengthConvertable interface
+    virtual double convertTo(UnitType unit);
 };
+
+}
 
 #endif

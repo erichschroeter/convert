@@ -1,11 +1,37 @@
 #include <iostream>
+#include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
+#include "units/Units.h"
 #include "units/Meter.h"
 #include "units/Inch.h"
 
 namespace po = boost::program_options;
 
 bool verbose = false;
+
+/**
+ * This is an overloaded operator>> function to help validate units
+ * passed from the command line.
+ */
+std::istream& operator>>(std::istream& in, Length::UnitType& unit)
+{
+    std::string token;
+    in >> token;
+    if (token == "inch")
+    {
+        unit = Length::INCH;
+    }
+    else if (token == "meter")
+    {
+        unit = Length::METER;
+    }
+    else
+    {
+        throw po::validation_error("No unit matches " + token);
+    }
+
+    return in;
+}
 
 int main (int argc, char *argv[])
 {
@@ -23,21 +49,16 @@ int main (int argc, char *argv[])
 	po::options_description config("Configuration");
         config.add_options()
             ("value", po::value<double>(), "The value to convert from")
-            ("from-unit", po::value<std::string>(), "The unit of length to convert from")
-            ("to-unit", po::value<std::vector< std::string> >(), "The unit(s) of length to convert to")
+            //("from", po::value<std::string>(), "The unit of length to convert from")
+            ("from", po::value<Length::UnitType>(), "The unit of length to convert from")
+            ("to", po::value< std::vector<Length::UnitType> >()->multitoken(), "The unit(s) of length to convert to")
         ;
         // make the VALUE, TO, and FROM options positional
         // allow user to specify multiple conversions
         // if none are specified, default will return the same unit as the FROM option
         po::positional_options_description input;
-        input.add("value", 1).add("from-unit", 1).add("to-unit", -1);
-	/*config.add_options()
-            ("multiplier,x", po::value<std::string>(), "multiplier (e.g. cm, mm, quarter, etc.)")
-	    ("meter,m", po::value<double>(), "meters (default)")
-	    ("inch,i", po::value<double>(), "inches")
-            ("light-year,L", po::value<double>(), "light years")
-	;*/
-
+        input.add("value", 1).add("from", 1).add("to", -1);
+	
 	po::options_description allowed_options("Allowed options");
 	allowed_options.add(generic).add(config);
 
@@ -60,30 +81,27 @@ int main (int argc, char *argv[])
 	{
 	    verbose = true;
 	}
+
+        double value = vm["value"].as<double>();
+        Length::UnitType from = vm["from"].as<Length::UnitType>();
         
-        std::vector<std::string> convertTo = vm["to-unit"].as< std::vector<std::string> >();
-
-        for (int i=0; i < convertTo.size(); i++)
+        // TODO create a UnitType factory
+        Length::ILengthConvertable* convertable;
+        if (from == Length::METER)
         {
-            std::cout << convertTo[i] << std::endl;
+            convertable = new Length::Meter(value);
         }
-/*
-	if (vm.count("meter"))
-	{
-	    double meters = vm["meter"].as<double>();
-	    Meter meter(meters);
-	    double inch = meter.convertTo(INCH);
-	    std::cout << inch << std::endl;
-	}
+        else if (from == Length::INCH)
+        {
+            convertable = new Length::Inch(value);
+        }    
 
-	if (vm.count("inch"))
-	{
-	    double inches = vm["inch"].as<double>();
-	    //double meter = inch / 39.3700787;
-            Inch inch(inches);
-            double meter = inch.convertTo(METER);
-	    std::cout << meter << std::endl;
-	}*/
+        // convert to all the other given units
+        BOOST_FOREACH(Length::UnitType unit, vm["to"].as< std::vector<Length::UnitType> >())
+        {
+            double conversion = convertable->convertTo(unit);
+            std::cout << conversion << " " << unit << std::endl;
+        }
     }
     catch (const std::exception& e) {
 	std::cout << "exception " << e.what() << std::endl;

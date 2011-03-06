@@ -1,5 +1,8 @@
 #include "Meter.h"
 
+namespace Length
+{
+
 Meter::Meter(double value) : value(value)
 {
 
@@ -21,3 +24,4 @@ double Meter::convertTo(UnitType unit)
     return retValue;
 }
 
+}

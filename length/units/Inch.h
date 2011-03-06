@@ -2,8 +2,12 @@
 #define INCH_H
 
 #include "Units.h"
+#include "ILengthConvertable.h"
 
-class Inch
+namespace Length
+{
+
+class Inch : public ILengthConvertable
 {
     // The value of this Inch object
     double value;
@@ -11,7 +15,10 @@ class Inch
 public:
     Inch(double value);
 
-    double convertTo(UnitType unit);
+    // ILengthConvertable interface
+    virtual double convertTo(UnitType unit);
 };
+
+}
 
 #endif
