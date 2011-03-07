@@ -1,2 +1,1 @@
-add_library(Meter Meter.cpp)
-add_library(Inch Inch.cpp)
+add_library(Length Meter.cpp Inch.cpp Factory.cpp)

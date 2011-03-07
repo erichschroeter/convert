@@ -1,9 +1,10 @@
 #include <iostream>
 #include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
-#include "units/Units.h"
+#include "units/IUnit.h"
 #include "units/Meter.h"
 #include "units/Inch.h"
+#include "units/Factory.h"
 
 namespace po = boost::program_options;
 
@@ -21,9 +22,25 @@ std::istream& operator>>(std::istream& in, Length::UnitType& unit)
     {
         unit = Length::INCH;
     }
+    else if (token == "in")
+    {
+        unit = Length::INCH;
+    }
     else if (token == "meter")
     {
         unit = Length::METER;
+    }
+    else if (token == "m")
+    {
+        unit = Length::METER;
+    }
+    else if (token == "lightyear")
+    {
+        unit = Length::LIGHT_YEAR;
+    }
+    else if (token == "ly")
+    {
+        unit = Length::LIGHT_YEAR;
     }
     else
     {
@@ -85,16 +102,8 @@ int main (int argc, char *argv[])
         double value = vm["value"].as<double>();
         Length::UnitType from = vm["from"].as<Length::UnitType>();
         
-        // TODO create a UnitType factory
-        Length::ILengthConvertable* convertable;
-        if (from == Length::METER)
-        {
-            convertable = new Length::Meter(value);
-        }
-        else if (from == Length::INCH)
-        {
-            convertable = new Length::Inch(value);
-        }    
+        // use Factory to create unit of length
+        Length::IConvertable* convertable = Length::Factory::CreateConvertable(from);
 
         // convert to all the other given units
         BOOST_FOREACH(Length::UnitType unit, vm["to"].as< std::vector<Length::UnitType> >())

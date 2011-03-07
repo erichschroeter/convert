@@ -12,7 +12,11 @@ double Meter::convertTo(UnitType unit)
 {
     double retValue = 0.0;
 
-    if (unit == INCH)
+    if (unit == METER)
+    {
+        retValue = value;
+    }
+    else if (unit == INCH)
     {
     	retValue = value * 39.3700787;
     }
@@ -22,6 +26,16 @@ double Meter::convertTo(UnitType unit)
     }
 
     return retValue;
+}
+
+double Meter::getValue()
+{
+    return value;
+}
+
+void Meter::setValue(double value)
+{
+    this->value = value;
 }
 
 }
