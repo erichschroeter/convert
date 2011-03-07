@@ -1,4 +1,5 @@
 #include "Meter.h"
+#include "UnitNotSupportedException.h"
 
 namespace Length
 {
@@ -22,7 +23,7 @@ double Meter::convertTo(UnitType unit)
     }
     else
     {
-        retValue = 0.0;
+        throw UnitNotSupportedException();
     }
 
     return retValue;

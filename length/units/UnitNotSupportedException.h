@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef UNITNOTSUPPORTEDEXCEPTION_H
+#define UNITNOTSUPPORTEDEXCEPTION_H
 
 #include <exception>
 
@@ -9,6 +9,6 @@ class UnitNotSupportedException : public std::exception
     {   
         return "Unit not supported";
     }   
-} UnitNotSupported;
+};
 
 #endif

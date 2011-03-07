@@ -13,21 +13,17 @@ IUnit* Factory::CreateUnit(UnitType unit)
 
     if (unit == METER)
     {
-        //Meter *meter = new Meter(defaultValue);
-        Meter meter(defaultValue);
-        //unitImpl = new Meter(defaultValue);
-        unitImpl = &meter;
+        Meter *meter = new Meter(defaultValue);
+        unitImpl = meter;
     }
     else if (unit == INCH)
     {
         Inch *inch = new Inch(defaultValue);
-        //unitImpl = new Inch(defaultValue);
         unitImpl = inch;
     }
     else
     {
-        //throw new std::exception("The factory does not support the unit: " + unit);
-        throw UnitNotSupported;
+        throw UnitNotSupportedException();
     }
 
     return unitImpl;
@@ -41,19 +37,16 @@ IConvertable* Factory::CreateConvertable(UnitType unit)
     if (unit == METER)
     {
         Meter *meter = new Meter(defaultValue);
-        //unitImpl = new Meter(defaultValue);
         unitImpl = meter;
     }
     else if (unit == INCH)
     {
         Inch *inch = new Inch(defaultValue);
-        //unitImpl = new Inch(defaultValue);
         unitImpl = inch;
     }
     else
     {
-        //throw new std::exception("The factory does not support the unit: " + unit);
-        throw UnitNotSupported;
+        throw UnitNotSupportedException();
     }
 
     return unitImpl;

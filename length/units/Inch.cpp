@@ -1,4 +1,5 @@
 #include "Inch.h"
+#include "UnitNotSupportedException.h"
 
 namespace Length
 {
@@ -22,7 +23,7 @@ double Inch::convertTo(UnitType unit)
     }
     else
     {
-        retValue = 0.0;
+        throw UnitNotSupportedException();
     }
 
     return retValue;
