@@ -37,4 +37,4 @@ To build:
     example:
         cd /usr/src/convert/length/CMake
  2. cmake ..
- 3. ./convert-length 1.0 m in
+ 3. make
