@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Meter.h"
 #include "UnitNotSupportedException.h"
 
@@ -27,6 +28,31 @@ double Meter::convertTo(UnitType unit)
     }
 
     return retValue;
+}
+
+std::string Meter::as(UnitType unit)
+{
+    std::string unitStr;
+
+    if (unit == METER)
+    {
+        unitStr = " meters";
+    }
+    else if (unit == INCH)
+    {
+    	unitStr = " inches";
+    }
+    else
+    {
+        throw UnitNotSupportedException();
+    }
+
+    std::stringstream concatStr;
+    concatStr << convertTo(unit) << unitStr;
+    unitStr = concatStr.str();
+
+    return unitStr;
+
 }
 
 double Meter::getValue()

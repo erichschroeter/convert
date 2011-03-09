@@ -22,6 +22,7 @@ public:
 
     // IConvertable interface
     virtual double convertTo(UnitType unit);
+    virtual std::string as(UnitType unit);
 };
 
 }

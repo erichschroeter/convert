@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Inch.h"
 #include "UnitNotSupportedException.h"
 
@@ -27,6 +28,31 @@ double Inch::convertTo(UnitType unit)
     }
 
     return retValue;
+}
+
+std::string Inch::as(UnitType unit)
+{
+    std::string unitStr;
+
+    if (unit == INCH)
+    {
+        unitStr = " inches";
+    }
+    else if (unit == METER)
+    {
+    	unitStr = " meters";
+    }
+    else
+    {
+        throw UnitNotSupportedException();
+    }
+
+    std::stringstream concatStr;
+    concatStr << convertTo(unit) << unitStr;
+    unitStr = concatStr.str();
+
+    return unitStr;
+
 }
 
 double Inch::getValue()

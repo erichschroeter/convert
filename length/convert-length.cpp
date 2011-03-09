@@ -108,8 +108,7 @@ int main (int argc, char *argv[])
         // convert to all the other given units
         BOOST_FOREACH(Length::UnitType unit, vm["to"].as< std::vector<Length::UnitType> >())
         {
-            double conversion = convertable->convertTo(unit);
-            std::cout << conversion << " " << unit << std::endl;
+            std::cout << convertable->as(unit) << std::endl;
         }
     }
     catch (const std::exception& e) {

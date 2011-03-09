@@ -1,6 +1,7 @@
 #ifndef INCH_H
 #define INCH_H
 
+#include <string>
 #include "IUnit.h"
 #include "IConvertable.h"
 
@@ -22,6 +23,7 @@ public:
 
     // IConvertable interface
     virtual double convertTo(UnitType unit);
+    virtual std::string as(UnitType unit);
 };
 
 }
