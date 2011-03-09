@@ -85,7 +85,8 @@ int main (int argc, char *argv[])
 
 	if (vm.count("help"))
 	{
-	    std::cout << allowed_options << std::endl;
+            std::cout << "Usage:\n  convert-length [options] value from to\n" << std::endl;
+	    std::cout << allowed_options;
 	    return 0;
 	}
 
