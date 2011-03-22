@@ -10,11 +10,11 @@ include_directories(${Boost_INCLUDE_DIR})
 
 include_directories("${PROJECT_SOURCE_DIR}/units")
 link_directories("${PROJECT_SOURCE_DIR}/units")
+
 # add all direct subdirectories
 add_subdirectory(units)
 
 # add the executable
 add_executable(convert-length convert-length.cpp)
 
-#target_link_libraries(convert-length ${Boost_LIBRARIES} Meter Inch)
 target_link_libraries(convert-length ${Boost_LIBRARIES} Length)

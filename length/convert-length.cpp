@@ -93,6 +93,7 @@ int main (int argc, char *argv[])
 	if (vm.count("version"))
 	{
 	    std::cout << "0.1" << std::endl;
+            return 0;
 	}
 
 	if (vm.count("verbose"))
